@@ -10,10 +10,13 @@
       footer.appendChild(stats);
     }
 
-    const currentPage = document.location.pathname.split("/").pop();
+    const currentPath = window.location.pathname;
+    const currentHash = window.location.hash;
     const links = document.querySelectorAll(".nav-a");
     links.forEach(link => {
-      if (link.getAttribute("href").includes(currentPage)) {
+      const linkPath = link.pathname;
+      const linkHash = link.hash;
+      if (linkPath === currentPath && (linkHash === "" || linkHash === currentHash)) {
         link.classList.add("active");
       }
     });
