@@ -10,8 +10,8 @@ async function bootstrap() {
   );
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
+  app.setBaseViewsDir(join(process.cwd(), 'src', 'views'));
+  hbs.registerPartials(join(process.cwd(), 'src', 'views', 'partials'));
   app.setViewEngine('hbs');
   app.set('view options', {layout:'structure'});
   await app.listen(process.env.PORT || 3000);
