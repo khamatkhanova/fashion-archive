@@ -21,22 +21,4 @@ export class AppController{
   auth(@Query('auth') auth?:string) {
     return this.session(auth);
   }
-
-  @Get('cart')
-  @Render('cart')
-  cart(@Query('auth')auth?: string) {
-    return this.session(auth);
-  }
-
-  @Get('favorites')
-  @Render('favorites')
-  favorites(@Query('auth')auth?:string) {
-    return this.session(auth);
-  }
-
-  @Get('list')
-  @Render('list')
-  list(@Query('auth') auth?:string) {
-    return this.session(auth);
-  }
 }
