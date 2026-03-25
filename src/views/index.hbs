@@ -1,35 +1,30 @@
 <section class="section" id="catalog">
   <h2 class="h2">каталог</h2>
-
   <div class="category" id="bags">
     <h3 class="h3">сумки</h3>
     <div>
-      <div class="product">
-        <img src="/images/bags/japanese mini.jpg" alt="japanese draped mini handbag" width="250" class="product-img">
-        <p class="product-p">japanese draped <b>mini</b> handbag</p>
-      </div>
-      <div class="product">
-        <img src="/images/bags/japanese maxi.png" alt="japanese draped maxi handbag" width="250" class="product-img">
-        <p class="product-p">japanese draped <b>maxi</b> handbag</p>
-      </div>
+      {{#each bags}}
+        <div class="product">
+          <img src="{{this.imageUrl}}" alt="{{this.name}}" width="250" class="product-img">
+          <p class="product-p">{{this.name}}</p>
+        </div>
+      {{/each}}
     </div>
   </div>
-
   <div class="category" id="shoes">
     <h3 class="h3">обувь</h3>
     <div>
-      <div class="product">
-        <img src="/images/shoes/aw gat.jpg" alt="2006 a/w gat grey sneakers" width="250" class="product-img">
-        <p class="product-p">2006 A/W gat grey sneakers</p>
-      </div>
-      <div class="product">
-        <img src="/images/shoes/metallic ballerina.jpg" alt="metallic ballerina tabi" width="250" class="product-img">
-        <p class="product-p">metallic ballerina tabi</p>
-      </div>
+      {{#each shoes}}
+        <div class="product">
+          <img src="{{this.imageUrl}}" alt="{{this.name}}" width="250" class="product-img">
+          <p class="product-p">{{this.name}}</p>
+        </div>
+      {{/each}}
     </div>
   </div>
+</section>
 
-  <section class="section" id="details">
+<section class="section" id="details">
     <h3 class="h3">детали продукции</h3>
 
     <div class="table-container">

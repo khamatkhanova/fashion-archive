@@ -1,0 +1,17 @@
+<section class="section">
+  <h2 class="h2">корзина</h2>
+  {{#if cartItems.length}}
+    <ul>
+      {{#each cartItems}}
+        <li>
+          <span>{{this.product.name}} x {{this.quantity}}</span>
+          <form action="/cart/{{this.id}}/delete" method="POST">
+            <button class="btn">удалить</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="p">в корзине ничего нет</p>
+  {{/if}}
+</section>
