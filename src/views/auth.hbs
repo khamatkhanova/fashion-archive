@@ -1,12 +1,11 @@
 <section class="section">
   <h2 class="h2">авторизация</h2>
-
   {{#if isAuth}}
     <p class="p">вы вошли в аккаунт</p>
     <a href="/?auth=0" class="btn">выйти</a>
   {{else}}
     <p class="p">вы не авторизованы</p>
-      <a href="/?auth=1" class="btn">войти</a>
-      <a href="/?auth=1" class="btn">зарегистрироваться</a>
+    <a href="/?auth=1" class="btn">войти</a>
+    <a href="/?auth=1" class="btn">зарегистрироваться</a>
   {{/if}}
 </section>

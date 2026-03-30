@@ -1,23 +1,23 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Res, Sse } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import type { Response } from 'express';
+import { map } from 'rxjs/operators';
 
 @Controller('todos')
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
-  @Get()
-  async findAll(@Res() res: Response) {
-    const todos = await this.todosService.findAll();
-    return res.render('todos/index', {todos});
+  @Sse('sse')
+  sse() {
+    return this.todosService.stream.pipe(map((data)=>({data})));
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string, @Res() res: Response) {
-    const todo = await this.todosService.findOne(+id);
-    return res.render('todos/show', {todo});
+  @Get()
+  async index(@Res() res: Response) {
+    const todos = await this.todosService.findAll();
+    return res.render('todos/index', { todos });
   }
 
   @Get('add')
@@ -26,26 +26,31 @@ export class TodosController {
   }
 
   @Post()
-  async create(@Body() body: CreateTodoDto, @Res() res: Response) {
-    const todo = await this.todosService.create(body);
-    return res.redirect(`/todos/${todo.id}`);
+  async create(@Body() dto: CreateTodoDto, @Res() res: Response) {
+    await this.todosService.create(dto);
+    this.todosService.notify('create');
+    return res.redirect('/todos');
   }
 
   @Get(':id/edit')
-  async editPage(@Param('id') id: string,@Res() res: Response) {
-    const todo= await this.todosService.findOne(+id);
-    return res.render('todos/edit', {todo});
+  async editPage(@Param('id') id: string, @Res() res: Response) {
+    const todo = await this.todosService.findOne(+id);
+    return res.render('todos/edit',{todo});
   }
 
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() body: UpdateTodoDto, @Res() res: Response) {
-    await this.todosService.update(+id, body);
-    return res.redirect(`/todos/${id}`);
+  @Post(':id/patch')
+  async update(@Param('id') id: string, @Body() dto: UpdateTodoDto, @Res() res: Response) {
+    const completedBoolean = Boolean(dto.completed);
+    const updateData: UpdateTodoDto = {text: dto.text,completed: completedBoolean,userId: dto.userId?Number(dto.userId) : undefined,};
+    await this.todosService.update(+id, updateData);
+    this.todosService.notify('update');
+    return res.redirect('/todos');
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string, @Res() res: Response) {
+  @Post(':id/delete')
+  async remove(@Param('id') id: string,@Res() res: Response) {
     await this.todosService.remove(+id);
+    this.todosService.notify('remove');
     return res.redirect('/todos');
   }
 }

@@ -1,0 +1,17 @@
+<section class="section">
+  <h2 class="h2">избранное</h2>
+  {{#if favorites.length}}
+    <ul>
+      {{#each favorites}}
+        <li>
+          <span>{{this.product.name}}</span>
+          <form action="/favorites/{{this.id}}/delete" method="POST">
+            <button class="btn">удалить</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="p">здесь будут отображаться товары, добавленные в избранное</p>
+  {{/if}}
+</section>

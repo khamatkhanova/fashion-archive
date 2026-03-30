@@ -1,0 +1,17 @@
+<section class="section">
+  <h2 class="h2">cписок дел</h2>
+  <a href="/todos/add" class="btn">добавить</a>
+  <ul class="todo-list">
+    {{#each todos}}
+      <li class="todo-item">
+        <span class="todo-text">{{this.text}} - {{#if this.completed}}✔{{else}}❌{{/if}}</span>
+        <div class="todo-actions">
+          <a href="/todos/{{this.id}}/edit" class="btn">редактировать</a>
+          <form action="/todos/{{this.id}}/delete" method="POST" class="todo-delete-form">
+            <button type="submit" class="btn">удалить</button>
+          </form>
+        </div>
+      </li>
+    {{/each}}
+  </ul>
+</section>
