@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -18,8 +18,10 @@ export class TodosService {
     return this.prisma.todo.findMany({include: {user:true}});
   }
 
-  findOne(id: number) {
-    return this.prisma.todo.findUnique({where: {id}, include: {user: true},});
+  async findOne(id: number) {
+    const todo = await this.prisma.todo.findUnique({where: {id}, include: {user: true}});
+    if (!todo) throw new NotFoundException(`todo with id ${id} not found`);
+    return todo;
   }
 
   create(dto: CreateTodoDto) {
@@ -27,7 +29,9 @@ export class TodosService {
     return this.prisma.todo.create({data});
   }
 
-  update(id: number, dto: UpdateTodoDto) {
+  async update(id: number, dto: UpdateTodoDto) {
+    const todo = await this.prisma.todo.findUnique({where: {id}});
+    if (!todo) throw new NotFoundException(`todo with id ${id} not found`);
     const data: any = {};
     if (dto.text !== undefined) data.text = dto.text;
     if (dto.completed !== undefined) data.completed = dto.completed;
@@ -35,7 +39,18 @@ export class TodosService {
     return this.prisma.todo.update({ where:{id},data});
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    const todo = await this.prisma.todo.findUnique({where: {id}});
+    if (!todo) throw new NotFoundException(`todo with id ${id} not found`);
     return this.prisma.todo.delete({where: {id}});
+  }
+
+
+  count() {
+    return this.prisma.todo.count();
+  }
+  findPaginated(page: number, limit: number) {
+    const skip = (page-1)*limit;
+    return this.prisma.todo.findMany({skip, take: limit,});
   }
 }
