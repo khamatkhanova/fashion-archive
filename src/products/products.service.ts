@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
@@ -8,7 +8,12 @@ export class ProductsService {
   findAll() {
     return this.prisma.product.findMany();
   }
+  async findById(id: number) {
+    const product = await this.prisma.product.findUnique({where: {id},});
 
+    if (!product) {throw new NotFoundException(`product with id ${id} not found`);}
+    return product;
+  }
 
   count() {
     return this.prisma.product.count();
