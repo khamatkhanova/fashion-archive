@@ -1,0 +1,136 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ProductObject {
+  """ID продукта"""
+  id: Int!
+
+  """название продукта"""
+  name: String!
+
+  """категория продукта"""
+  category: String!
+
+  """URL изображения"""
+  imageUrl: String
+
+  """дата создания"""
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type FavoriteObject {
+  """ID записи избранного"""
+  id: Int!
+
+  """ID пользователя"""
+  userId: Int!
+
+  """ID продукта"""
+  productId: Int!
+
+  """продукт, добавленный в избранное"""
+  product: ProductObject!
+}
+
+type CartObject {
+  """ID элемента корзины"""
+  id: Int!
+
+  """ID пользователя"""
+  userId: Int!
+
+  """ID продукта"""
+  productId: Int!
+
+  """количество товара"""
+  quantity: Int!
+
+  """продукт, добавленный в корзину"""
+  product: ProductObject!
+}
+
+type TodoObject {
+  """ID задачи"""
+  id: Int!
+
+  """ID пользователя"""
+  userId: Int!
+
+  """текст задачи"""
+  text: String!
+
+  """статус выполнения задачи"""
+  completed: Boolean!
+
+  """дата создания задачи"""
+  createdAt: DateTime!
+}
+
+type Query {
+  products(page: Int, limit: Int): [ProductObject!]!
+  product(id: Int!): ProductObject!
+  favorites(page: Int, limit: Int): [FavoriteObject!]!
+  cartItems(page: Int, limit: Int): [CartObject!]!
+  todos(page: Int, limit: Int): [TodoObject!]!
+  todo(id: Int!): TodoObject!
+}
+
+type Mutation {
+  createFavorite(data: CreateFavoriteInput!): FavoriteObject!
+  removeFavorite(id: Int!): FavoriteObject!
+  addToCart(data: CreateCartInput!): CartObject!
+  removeFromCart(id: Int!): CartObject!
+  createTodo(data: CreateTodoInput!): TodoObject!
+  updateTodo(data: UpdateTodoInput!): TodoObject!
+  removeTodo(id: Int!): TodoObject!
+}
+
+input CreateFavoriteInput {
+  """ID пользователя"""
+  userId: Int!
+
+  """ID продукта"""
+  productId: Int!
+}
+
+input CreateCartInput {
+  """ID пользователя"""
+  userId: Int!
+
+  """ID продукта"""
+  productId: Int!
+
+  """Количество товара"""
+  quantity: Int
+}
+
+input CreateTodoInput {
+  """ID пользователя"""
+  userId: Int!
+
+  """текст задачи"""
+  text: String!
+
+  """статус выполнения задачи"""
+  completed: Boolean
+}
+
+input UpdateTodoInput {
+  """ID задачи"""
+  id: Int!
+
+  """новый текст задачи"""
+  text: String
+
+  """новый статус выполнения"""
+  completed: Boolean
+
+  """ID пользователя"""
+  userId: Int
+}
