@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import hbs from 'hbs';
 import {AllExceptionsFilter} from './filter';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
+import { ElapsedTimeInterceptor } from './interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule,);
@@ -19,6 +20,7 @@ async function bootstrap() {
   app.setViewEngine('hbs');
   app.set('view options', {layout:'layout'});
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalInterceptors(new ElapsedTimeInterceptor());
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

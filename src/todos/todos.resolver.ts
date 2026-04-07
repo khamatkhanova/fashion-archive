@@ -10,7 +10,7 @@ export class TodosResolver {
 
   @Query(() => [TodoObject], { name: 'todos' })
   getTodos(@Args('page', {type: () => Int, nullable: true}) page = 1, @Args('limit', {type: () => Int, nullable: true}) limit = 10,) {
-    return this.todosService.findPaginated(page, limit); // ✅ пагинация
+    return this.todosService.findPaginated(page, limit);
   }
 
   @Query(() => TodoObject, {name: 'todo'})

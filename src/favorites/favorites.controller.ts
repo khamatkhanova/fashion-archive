@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Param, Res} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Res, Render } from '@nestjs/common';
 import {FavoritesService} from './favorites.service';
 import type {Response} from 'express';
 import {CreateFavoriteDto} from './dto/create-favorite.dto';
@@ -8,9 +8,10 @@ export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
 
   @Get()
-  async index(@Res() res: Response) {
+  @Render('favorites/index')
+  async index() {
     const favorites = await this.favoritesService.findAll();
-    return res.render('favorites', {favorites});
+    return {favorites};
   }
 
   @Post()

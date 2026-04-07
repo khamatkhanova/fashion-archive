@@ -15,7 +15,7 @@ export class TodosService {
   }
 
   findAll() {
-    return this.prisma.todo.findMany;
+    return this.prisma.todo.findMany();
   }
 
   async findOne(id: number) {

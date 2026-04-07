@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Res, Sse } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Res, Sse, Render } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -15,9 +15,10 @@ export class TodosController {
   }
 
   @Get()
-  async index(@Res() res: Response) {
+  @Render('todos/index')
+  async index() {
     const todos = await this.todosService.findAll();
-    return res.render('todos/index', { todos });
+    return {todos};
   }
 
   @Get('add')

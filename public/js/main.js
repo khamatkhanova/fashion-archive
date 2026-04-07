@@ -1,5 +1,8 @@
-(function() {
-  window.addEventListener("load", function() {
+(function () {
+  window.addEventListener("load", () => {
+    const clientTime = performance.now().toFixed(2);
+    const el = document.getElementById("clientTime");
+    if (el) el.textContent = clientTime;
     const currentPath = window.location.pathname;
     const currentHash = window.location.hash;
     const links = document.querySelectorAll(".nav-a");
