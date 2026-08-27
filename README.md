@@ -4,11 +4,10 @@ a full-stack e-commerce web application inspired by the maison margiela brand
 
 ## about
 
-a web-based clothing store with a modern frontend and a backend api
-
-the application provides a complete user experience for browsing and managing products, as well as additional user functionality
+a web-based clothing store with a modern frontend and backend api. the application provides a complete user experience for browsing and managing products, as well as additional user functionality
 
 users can:
+
   browse the product catalog  
   view products by category  
   view detailed product information  
@@ -31,8 +30,6 @@ users can:
   html  
   css  
 
-the frontend provides the user interface and communicates with the backend through the available api endpoints
-
 ### backend
 
   typescript  
@@ -42,14 +39,10 @@ the frontend provides the user interface and communicates with the backend throu
   rest api  
   graphql  
 
-the backend is responsible for business logic, request processing, data validation, authentication and communication with the database
-
 ### database
 
   postgresql  
   prisma orm  
-
-postgresql is used for persistent data storage. prisma provides an abstraction layer for working with the database
 
 ### infrastructure
 
@@ -60,13 +53,13 @@ postgresql is used for persistent data storage. prisma provides an abstraction l
 
 ## architecture
 
-the application is divided into separate functional modules
-
-main modules:
-
-  products - product catalog and product management  
-  cart - shopping cart management  
-  favorites - favorite products management  
-  todos - personal task management  
+  products — product catalog and product management  
+  cart — shopping cart management  
+  favorites — favorite products management  
+  todos — personal task management  
 
 each module contains services, controllers, dto classes and graphql components
+
+## main page
+
+![main page](./main.png)
